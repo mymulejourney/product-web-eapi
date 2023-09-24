@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="product-web-eapiFlow" doc:id="fdd2cf82-032f-403a-a1d1-147e34e2be51" >
+		<http:listener doc:name="Listener" doc:id="68c1529e-0550-4c38-b460-2ad48a85c87d" path="/products" config-ref="HTTP_Listener_config"/>
+		<logger level="INFO" doc:name="start" doc:id="ffbd2ef1-adf7-4292-ad6c-b9cc66957805" message="#['product flow started']"/>
+		<ee:transform doc:name="set-payload" doc:id="2843658c-2d1e-482b-a56e-bc8681d32dc2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	'id':100,
+	'name':'iphone',
+	'country':'india'
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="end" doc:id="453fb0cc-2c50-468b-a975-89c4888331c8" message="#['product flow ended']"/>
+	</flow>
+</mule>
